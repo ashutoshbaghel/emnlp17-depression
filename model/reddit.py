@@ -15,7 +15,7 @@ import tensorflow as tf
 import keras.backend as K
 from keras.models import Model, Sequential
 from keras.optimizers import Adam
-from keras.layers import Dense, Embedding, Input, TimeDistributed, Activation, Masking, Convolution1D, MaxPooling1D, Flatten, AveragePooling1D, GlobalAveragePooling1D
+from keras.layers import Dense, Embedding, Input, TimeDistributed, Activation, Masking, Convolution1D, MaxPooling1D, GlobalMaxPooling1D, Flatten, AveragePooling1D, GlobalAveragePooling1D
 
 import sacred
 from sacred.utils import apply_backspaces_and_linefeeds
@@ -106,12 +106,13 @@ def build_model(p):
     conv.add(Convolution1D(nb_filter=filters, filter_length=filtlen, border_mode='valid', W_constraint=wconstrain,
                            activation='linear', subsample_length=1, input_shape=(max_length, embed_size)))
     conv.add(Activation(p['af']))
-    conv.add(GlobalAveragePooling1D())
+    conv.add(GlobalMaxPooling1D())
 
     posts = TimeDistributed(conv)(embedded)
-    combined = Convolution1D(nb_filter=filters, filter_length=p['acl'], border_mode='valid',
-                             activation=p['af'], subsample_length=p['acl'])(posts)
-    combined = Flatten()(combined)
+    # combined = Convolution1D(nb_filter=filters, filter_length=p['acl'], border_mode='valid',
+    #                          activation=p['af'], subsample_length=p['acl'])(posts)
+    combined = GlobalAveragePooling1D()(posts)
+    # combined = Flatten()(combined)
 
     if densed != 0:
         combined = Dense(densed, activation=p['af'])(combined)
