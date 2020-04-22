@@ -112,7 +112,7 @@ def build_model(p):
 
         posts = TimeDistributed(conv)(embedded)
         convs.append(posts)
-    posts = Merge(convs, mode='concat', concat_axis=2)
+    posts = Merge(mode='concat', concat_axis=2)(convs)
     combined = Convolution1D(nb_filter=filters, filter_length=p['acl'], border_mode='valid',
                              activation=p['af'], subsample_length=p['acl'])(posts)
     # combined = GlobalAveragePooling1D()(posts)

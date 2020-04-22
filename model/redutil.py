@@ -26,7 +26,7 @@ def config():
     prep = None # other post pre-processing (e.g., rev to reverse post order)
     
     filters = 25 # post CNN filters
-    filtlen = [3, 4, 5] # post CNN n-gram size
+    filtlen = [3,4,5] # post CNN n-gram size
     poollen = 25
     ptype = 'acnn'
     acl = 15
