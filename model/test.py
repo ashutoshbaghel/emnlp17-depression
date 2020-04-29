@@ -27,6 +27,9 @@ def fn_model(fn, stype='testing'):
                 p[k] = str(p[k])
         elif k in strk:
             p[k] = str(p[k])
+        elif k == 'filtlen':
+            p[k] = [3,4,5]
+ 
         elif k in boolk:
             p[k] = (p[k] == 'True')
         else:
