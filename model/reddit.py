@@ -105,7 +105,7 @@ def build_model(p):
     conv = Sequential()
     conv.add(LSTM(filters, input_shape=(max_length, embed_size)))
     conv.add(Activation(p['af']))
-    conv.add(GlobalAveragePooling1D())
+    # conv.add(GlobalAveragePooling1D())
 
     posts = TimeDistributed(conv)(embedded)
     combined = Convolution1D(nb_filter=filters, filter_length=p['acl'], border_mode='valid',

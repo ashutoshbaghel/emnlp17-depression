@@ -98,7 +98,7 @@ class ValMetrics(Callback):
 
         f1, p, r = evalon('validation', self.model, X=self.val_X, y_true=self.val_y)
         print("epoch", epoch)
-        if epoch == 1 or (f1 >= self.bestf1 and f1 >= 0.45):
+        if epoch == 1 or (f1 >= (self.bestf1-0.10) and f1 >= 0.40):
             fn = os.path.join(self.outdir, "%s-%0.2f_%0.2f_%0.2f" % (epoch, f1, p, r))
             self.model.save_weights(fn, overwrite=True)
         if f1 >= self.bestf1:
