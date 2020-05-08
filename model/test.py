@@ -7,6 +7,10 @@ from keras.utils.np_utils import to_categorical, categorical_probas_to_classes
 from reddit import build_model
 from redutil import datagen
 
+from sklearn.metrics import roc_curve
+from sklearn.metrics import roc_auc_score
+import matplotlib.pyplot as plt
+
 if len(sys.argv) != 2:
     print("usage: <weights>")
     sys.exit(1)
@@ -53,9 +57,11 @@ def fn_model(fn, stype='testing'):
     posf1 = sklearn.metrics.f1_score(y_true, y_pred, pos_label=1, average='binary')
     posp = sklearn.metrics.precision_score(y_true, y_pred, pos_label=1, average='binary')
     posr = sklearn.metrics.recall_score(y_true, y_pred, pos_label=1, average='binary')
+    
+    return (posf1, posp, posr), y_pred, val_y, y_true
 
-    return (posf1, posp, posr), y_pred, val_y
-
-metrics, y_pred, val_y = fn_model(weightsfn)
+metrics, y_pred, val_y, y_true = fn_model(weightsfn)
 print(metrics)
 print(sklearn.metrics.classification_report(val_y, y_pred))
+fpr, tpr, thresholds = roc_curve(y_true, y_pred)
+plot_roc_curve(fpr, tpr)
