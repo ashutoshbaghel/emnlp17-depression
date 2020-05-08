@@ -15,7 +15,7 @@ import tensorflow as tf
 import keras.backend as K
 from keras.models import Model, Sequential
 from keras.optimizers import Adam
-from keras.layers import Dense, Embedding, Input, TimeDistributed, Activation, Masking, Convolution1D, MaxPooling1D, GlobalMaxPooling1D, Flatten, AveragePooling1D, GlobalAveragePooling1D
+from keras.layers import Dense, Dropout, Embedding, Input, TimeDistributed, Activation, Masking, Convolution1D, MaxPooling1D, GlobalMaxPooling1D, Flatten, AveragePooling1D, GlobalAveragePooling1D
 
 import sacred
 from sacred.utils import apply_backspaces_and_linefeeds
@@ -113,9 +113,14 @@ def build_model(p):
     #                          activation=p['af'], subsample_length=p['acl'])(posts)
     combined = GlobalAveragePooling1D()(posts)
     # combined = Flatten()(combined)
-
-    if densed != 0:
-        combined = Dense(densed, activation=p['af'])(combined)
+       
+        # if densed != 0:
+    combined = Dense(256, activation=p['af'])(combined)
+    combined = Dropout(0.2)(combined)
+    combined = Dense(128, activation=p['af'])(combined)
+    combined = Dropout(0.2)(combined)
+    combined = Dense(64, activation=p['af'])(combined)
+    combined = Dropout(0.2)(combined)
     outlayer = Dense(2, activation='softmax')(combined)
 
     model = Model(inp, outlayer)
