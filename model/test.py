@@ -17,6 +17,15 @@ if len(sys.argv) != 2:
 
 weightsfn = sys.argv[1]    
 
+def plot_roc_curve(fpr, tpr):
+    plt.plot(fpr, tpr, color='orange', label='ROC')
+    plt.plot([0, 1], [0, 1], color='darkblue', linestyle='--')
+    plt.xlabel('False Positive Rate')
+    plt.ylabel('True Positive Rate')
+    plt.title('Receiver Operating Characteristic (ROC) Curve')
+    plt.legend()
+    plt.show()
+    
 def fn_model(fn, stype='testing'):
     # parse config options to use (except for LR, which conflicts with the . param separator)
     p = dict([x.split(":") for x in os.path.dirname(fn.replace("tmp/w/", "")).replace("lr:0.001.", "").split(".")])
