@@ -108,7 +108,7 @@ def build_model(p):
         conv.add(Convolution1D(nb_filter=filters, filter_length=fsz, border_mode='valid', W_constraint=wconstrain,
                                activation='linear', subsample_length=1, input_shape=(max_length, embed_size)))
         conv.add(Activation(p['af']))
-        conv.add(GlobalAveragePooling1D())
+        conv.add(GlobalMaxPooling1D())
 
         posts = TimeDistributed(conv)(embedded)
         convs.append(posts)

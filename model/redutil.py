@@ -33,7 +33,7 @@ def config():
     densed = 50
     embed_size = 50
 
-    w2v = False # initialize embedding layer with pre-trained embeddings
+    w2v = True # initialize embedding layer with pre-trained embeddings
     etrain = True # embeddings trainable?
     epochs = 25 # iterations to run for
     batch = 64 # batch size
