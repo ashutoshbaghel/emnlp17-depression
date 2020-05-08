@@ -113,8 +113,10 @@ def build_model(p):
                              activation=p['af'], subsample_length=p['acl'])(posts)
     combined = Flatten()(combined)
 
-    if densed != 0:
-        combined = Dense(densed, activation=p['af'])(combined)
+        # if densed != 0:
+    combined = Dense(256, activation=p['af'])(combined)
+    combined = Dense(128, activation=p['af'])(combined)
+    combined = Dense(64, activation=p['af'])(combined)
     outlayer = Dense(2, activation='softmax')(combined)
 
     model = Model(inp, outlayer)
