@@ -113,8 +113,8 @@ def build_model(p):
     combined = Flatten()(combined)
 
         # if densed != 0:
-    combined = Dense(256, activation=p['af'])(combined)
-    combined = Dropout(0.2)(combined)
+    # combined = Dense(256, activation=p['af'])(combined)
+    # combined = Dropout(0.2)(combined)
     combined = Dense(128, activation=p['af'])(combined)
     combined = Dropout(0.2)(combined)
     combined = Dense(64, activation=p['af'])(combined)
